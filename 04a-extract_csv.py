@@ -5,7 +5,7 @@ df_hipotecas.head()
 
 cols_usar = ['period', 'total_nacional']
 
-df_hipotecas = pd.read_csv('../data/hipotecas/hipotecas_lectura', usecols=cols_usar)
+df_hipotecas = pd.read_csv('~/data/hipotecas/hipotecas_lectura', usecols=cols_usar)
 df_hipotecas.head()
 
 df_hipotecas = pd.read_csv('../data/hipotecas/hipotecas_lectura',
