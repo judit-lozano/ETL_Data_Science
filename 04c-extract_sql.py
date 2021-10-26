@@ -1,6 +1,6 @@
 # Conectamos a la base de datos
 from sqlalchemy import create_engine
-engine = create_engine('sqlite:///../data/indexKaggle.sqlite')
+engine = create_engine('sqlite:///data/indexKaggle.sqlite') #ruta absoluta sería 'sqlite:////home/rstudio/data/indexKaggle.sqlite'
 
 # Trabajaremos con pandas
 import pandas as pd
@@ -24,6 +24,8 @@ limited_prices = pd.read_sql('SELECT * FROM IndexPrice LIMIT 10', engine)
 print(limited_prices)
 
 limited_prices.close
+
+pd.read_sql('SELECT DISTINCT stock_index FROM indexPrice', engine)
 
 # Para queries más complejas:
 # 
