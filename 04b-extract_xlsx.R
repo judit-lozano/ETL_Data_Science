@@ -1,6 +1,6 @@
 library(readxl)
-path_to_file <- "../data/ejemplos_lectura.xlsx"
-df_ejemplos <- read_xlsx(path_to_file)
+path_to_file <- "~/data/ejemplos_lectura.xlsx" #cambio .. por ~ para absoluto (~) cargar la carpeta, en relativo seria sin ~
+df_ejemplos <- read_xlsx(path_to_file) #ojo leo solo la parte que me interesa. Por defecto el programa lee la primera hoja esté en oculo o no.
 df_ejemplos
 
 # Hay hojas ocultas
