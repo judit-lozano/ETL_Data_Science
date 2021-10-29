@@ -1,6 +1,7 @@
-
+#tranformacion de datos mejor con R normalmente
 library(readxl)
-path_to_file <- "../data/ejemplos_lectura.xlsx"
+library(dplyr)
+path_to_file <- "~/data/ejemplos_lectura.xlsx"
 df_chungo <- read_xlsx(path_to_file, sheet = "Holi")
 df_chungo
 
@@ -12,9 +13,19 @@ df_chungo %>%
 
 # Dates as expressions.
 
+#El ordenador esta en ingles
+#Pero el texto esta en español
+#Asi que el ordenador no sabe trducir
+
+#Para decirle que trabaje en español:
+Sys.setlocale("LC_TIME", "Spanish")
+
+
 df_chungo %>% 
   select(chungo_02) %>% 
-  mutate(fecha = as.Date(chungo_02, format = "Hoy es %d de %B de %Y"))
+  mutate(fecha = as.Date(chungo_02, 
+                         format = "Hoy es %d de %B de %Y")) #interpreta como dia de mes
+#ayuda en ?strptime
 
 # Expressions in other languages
 
@@ -26,7 +37,7 @@ df_chungo %>%
   mutate(fecha = as.Date(chungo_03, format = "%A, %B %d %Y"))
 
 # Ahora pongo de nuevo la config original de idioma
-Sys.setlocale("LC_TIME", "Spanish")
+# Sys.setlocale("LC_TIME", "Spanish")
 
 # Dates as something very strange. 
 # La cuarta columna chunga es un número no entero leído como 
@@ -34,6 +45,11 @@ Sys.setlocale("LC_TIME", "Spanish")
 # y luego convertimos a fecha. 
 
 library(readr)
+
+df_chungo %>% 
+  select(chungo_04) %>%
+  mutate(as.Date(chungo_04, origin="1899-12-30")) #aquí me da error
+
 df_chungo %>% 
   select(chungo_04) %>% 
   mutate(chungo_04 = parse_number(chungo_04), 
@@ -66,6 +82,9 @@ df_fechas %>%
 df_fechas %>% 
   select(starts_with("fecha")) %>% 
   mutate(across(starts_with("fecha"), as.Date))
+
+library(ISOweek)
+library(lubridate)
 
 df_fechas %>% 
   select(fecha_01) %>% 
