@@ -18,7 +18,7 @@ library(purrr)
 ups_downs <- runif(size_pop, -0.015, 0.015)
 ups_downs[1] <- 20
 df_simulated <- df_simulated %>% 
-  mutate(V5 = accumulate(ups_downs, ~.x + .x * .y))
+  mutate(V5 = accumulate(ups_downs, ~.x + .x * .y)) #cada dato es el anterior más una operacion
 
 head(df_simulated)
 
@@ -46,6 +46,9 @@ replace_with_mean <- function(x){
   }
 } 
 
+#df_simulated %>% 
+ # mutate(V1 = ..., columna2 = ..) --> mejor usar el codigo siguiente
+
 df_imputed <- df_simulated %>% 
   mutate(across(starts_with("V"), replace_with_mean))
 
@@ -59,6 +62,14 @@ check_na_per_column(df_imputed)
 # - `V3`: normal distribution with mean 100 and variance 10.
 # - `V4`: Poisson distribution with $\lambda = 10$.
 # - `V5`: something random.
+
+df_simulated2 <- tibble(
+  index = seq_len(size_pop),
+  V1 = runif(size_pop),
+  V2 = rnorm(size_pop),
+  V3 = rnorm(size_pop, 100, 10),
+  V4 = rpois(size_pop, lambda = 10)
+)
 
 
 # First I create a copy of the data frame for being able to keep using the 
@@ -117,3 +128,9 @@ df_imputed$V5 <- imap_dbl(df_simulated$V5, function(.x, .y){
   }
 })
 
+
+#Aclaracion, yo tengo
+df_simulated
+
+attach(df_simulated)
+V1 <- df_simulated - mean(df_simulated$V1, na.rm = TRUE)
